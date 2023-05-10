@@ -1,0 +1,53 @@
+матрица преобразования:
+    glPushMatrix(); - сохранить текущее состояние матрицы
+    glPopMatrix(); - загрузить состояние матрицы (после загрузки второй раз загрузить нельзя)
+    glLoadIdentity(); - вернуть состояние матрицы в исходное
+
+................................
+массивы вертексов:
+    GLfloat vertexes[] = {
+        0,0,0, 
+        1,0,0,
+        1,1,0,
+        0,1,0};
+ в цикле:
+        glVertexPointer(3, GL_FLOAT, 0, &vertexes); 3 - сколько измерений у точки; GL_FLOAT - тип данных точек; 0 - шаг; &vertexes - ссылка на массив точек
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4); GL_TRIANGLE_FAN - тип рисования; 0, с какого элемента; 4 - сколько точек
+        glDisableClientState(GL_VERTEX_ARRAY);
+
+................................
+массивы индексов:
+    GLfloat vert[] = {
+        -0.2, -0.2, 0,
+        -0.2, 0.2,  0,
+        0.2, -0.2,  0,
+        0.2, 0.2,   0,
+        0,   0,     0.35
+    };
+    GLuint index[] = {0,1,4, 0,2,4, 1,3,4, 3,2,4};
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, &vert);
+    glPushMatrix();
+        glColor3f(1,0.4,0.4);
+        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, &index);
+    glPopMatrix();
+    glDisableClientState(GL_VERTEX_ARRAY);
+
+................................
+инпут:
+    вне мейна:
+        void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){}
+        void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){}
+        void mouse_button_callback(GLFWwindow* window, int button, int action, int mods){}
+        static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos){}
+    в мейне:
+        glfwSetKeyCallback(window, key_callback);
+        glfwSetScrollCallback(window, scroll_callback);
+        glfwSetMouseButtonCallback(window, mouse_button_callback);
+        glfwSetCursorPosCallback(window, cursor_position_callback);
+
+................................
+ограничение градусов при повороте камеры:
+if(key_left) rotation_x = ++rotation_x > 180 ? 180 : rotation_x;
+if(key_right) rotation_x = --rotation_x < 0 ? 0 : rotation_x;
