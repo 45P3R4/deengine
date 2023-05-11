@@ -1,6 +1,6 @@
-float m_x = 0;
-float m_y = 0;
-float s_y = 0;
+float mouse_x = 0;
+float mouse_y = 0;
+float scroll_y = 0;
 
 float drag_x = 0;
 float drag_y = 0;
@@ -21,7 +21,7 @@ bool key_f = false;
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    s_y = yoffset;
+    scroll_y = yoffset;
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -39,11 +39,11 @@ static void cursor_position_callback(GLFWwindow* window, double xpos, double ypo
 {
     if(mouse_left){
         drag_x = drag_y = 0;
-        drag_x = xpos - m_x;
-        drag_y = ypos - m_y;
+        drag_x = xpos - mouse_x;
+        drag_y = ypos - mouse_y;
     }     
-    m_x = xpos;
-    m_y = ypos;
+    mouse_x = xpos;
+    mouse_y = ypos;
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
