@@ -28,16 +28,6 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
         mouse_left = true;
-        if(in_button(m_x, m_y, test_button)){
-            if(test_button.pressed){
-                buffer_color[0] = 0.6;
-                buffer_color[1] = 0.8;
-                buffer_color[2] = 1.0;
-            }
-            else
-                buffer_color[0] = buffer_color[1] = buffer_color[2] = 0;
-            test_button.pressed = !test_button.pressed;
-        }
     }
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
         mouse_left = false;
