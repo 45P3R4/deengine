@@ -28,24 +28,15 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-        mouse_left = true;
-    }
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
-        mouse_left = false;
-    }
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) mouse_left = true;
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) mouse_left = false;
 
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
-        mouse_right = true;
-    }
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE){
-        mouse_right = false;
-    }
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) mouse_right = true;
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) mouse_right = false;
 }
 
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    //rework
     drag_x = (xpos - mouse_x);
     if (drag_x > 0) drag_x--;
     if (drag_x < 0) drag_x++;
@@ -59,55 +50,35 @@ static void cursor_position_callback(GLFWwindow* window, double xpos, double ypo
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if(action == GLFW_PRESS){
-        if(key == GLFW_KEY_UP)
-            key_up = true;
-        if(key == GLFW_KEY_DOWN)
-            key_down = true;
+        if(key == GLFW_KEY_UP) key_up = true;
+        if(key == GLFW_KEY_DOWN) key_down = true;
 
-        if(key == GLFW_KEY_LEFT)
-            key_left = true;
-        if(key == GLFW_KEY_RIGHT)
-            key_right = true;
+        if(key == GLFW_KEY_LEFT) key_left = true;
+        if(key == GLFW_KEY_RIGHT) key_right = true;
 
-        if(key == GLFW_KEY_W)
-            key_w = true;
-        if(key == GLFW_KEY_S)
-            key_s = true;
+        if(key == GLFW_KEY_W) key_w = true;
+        if(key == GLFW_KEY_S) key_s = true;
 
-        if(key == GLFW_KEY_A)
-            key_a = true;
-        if(key == GLFW_KEY_D)
-            key_d = true;
+        if(key == GLFW_KEY_A) key_a = true;
+        if(key == GLFW_KEY_D) key_d = true;
 
-        if(key == GLFW_KEY_R)
-            key_r = true;
-        if(key == GLFW_KEY_F)
-            key_f = true;
+        if(key == GLFW_KEY_R) key_r = true;
+        if(key == GLFW_KEY_F) key_f = true;
     }
     if(action == GLFW_RELEASE){
-        if(key == GLFW_KEY_UP)
-            key_up = false;
-        if(key == GLFW_KEY_DOWN)
-            key_down = false;
+        if(key == GLFW_KEY_UP) key_up = false;
+        if(key == GLFW_KEY_DOWN) key_down = false;
 
-        if(key == GLFW_KEY_LEFT)
-            key_left = false;
-        if(key == GLFW_KEY_RIGHT)
-            key_right = false;
+        if(key == GLFW_KEY_LEFT) key_left = false;
+        if(key == GLFW_KEY_RIGHT) key_right = false;
 
-        if(key == GLFW_KEY_W)
-            key_w = false;
-        if(key == GLFW_KEY_S)
-            key_s = false;
+        if(key == GLFW_KEY_W) key_w = false;
+        if(key == GLFW_KEY_S) key_s = false;
 
-        if(key == GLFW_KEY_A)
-            key_a = false;
-        if(key == GLFW_KEY_D)
-            key_d = false;
+        if(key == GLFW_KEY_A) key_a = false;
+        if(key == GLFW_KEY_D) key_d = false;
         
-        if(key == GLFW_KEY_R)
-            key_r = false;
-        if(key == GLFW_KEY_F)
-            key_f = false;
+        if(key == GLFW_KEY_R) key_r = false;
+        if(key == GLFW_KEY_F) key_f = false;
     }
 }

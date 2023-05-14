@@ -1,53 +1,47 @@
-class element{
-    public:
-    
-    char name[32];
-    float height;
-    float width;
-    bool hover;
-  
-    bool is_hover(int x, int y){
-        return (x > vert[0]) && (x < vert[4]) && 
-               (y > vert[1]) && (y < vert[5]);
-    }
+typedef struct
+{
+   float vert[8];
+   unsigned char state;
+} gui_element;
 
-    void draw_element(){
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(2, GL_FLOAT, 0, vert);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-        glDisableClientState(GL_VERTEX_ARRAY);
-    }
-    
-    element(){
-        const char *name = "unnamed\0";
-        hover = false;
+bool is_hover(int x, int y, gui_element* element){
+    return (x > element->vert[0]) && (x < element->vert[4]) && 
+           (y >  element->vert[1]) && (y <  element->vert[5]);
+}
 
-        vert[0] = 0;    vert[1] = 0;
-        vert[2] = 0;    vert[3] = 30;
-        vert[4] = 30;   vert[5] = 30;
-        vert[6] = 30;   vert[7] = 0;
-    }
-    element(float w, float h, float pos_w, float pos_h){
-        vert[0] = pos_w;        vert[1] = pos_h;
-        vert[2] = pos_w;        vert[3] = h + pos_h;
-        vert[4] = w + pos_w;    vert[5] = h + pos_h;
-        vert[6] = w + pos_w;    vert[7] = pos_h;
-    }
+gui_element create_element(float width, float height, float pos_x, float pos_y)
+{
+    gui_element box;
+    box.vert[0] = pos_x;             box.vert[1] = pos_y;
+    box.vert[2] = pos_x;             box.vert[3] = height + pos_y;
+    box.vert[4] = width + pos_x;     box.vert[5] = height + pos_y;
+    box. vert[6] = width + pos_x;    box.vert[7] = pos_y;
+    return box;
+}
 
-    ~element(){}
+void draw_element(gui_element* element){
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, element->vert);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    glDisableClientState(GL_VERTEX_ARRAY);
+}
 
-    private:
-    float vert[8];
-};
+gui_element bottom_panel;
+gui_element square;
 
-element test_panel(screen_width,30,0,screen_height - 30);
+void gui_init()
+{
+    bottom_panel = create_element(screen_width,30,0,screen_height-30);
+    square = create_element(30,30,screen_width - 30, 0);
+}
 
 void draw_gui()
 {
     glPushMatrix();
     glLoadIdentity();
-    glOrtho(0,screen_width,screen_height,0, -1,1); //координаты теперь совпадают с координатами окна
+    glOrtho(0,screen_width, screen_height,0, -1,1);
     glColor3f(0,0,0);
-    test_panel.draw_element();
+    draw_element(&bottom_panel);
+    draw_element(&square);
     glPopMatrix();
 }

@@ -23,7 +23,6 @@ void move_camera()
             rotation_x = 180;
         if(rotation_x < 0)
             rotation_x = 0;
-        std::cout << rotation_x << "\n";
     } 
 
     float angle = -rotation_z / 180 * M_PI;

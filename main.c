@@ -1,12 +1,13 @@
 #include <GLFW/glfw3.h>
 #include <math.h>
-#include <iostream>
+#include <stdbool.h>
 
 #include "draw_primitives.h"
 #include "window.h"
 #include "gui.h"
 #include "input.h"
 #include "camera.h"
+#include "window_callback.h"
 
 const unsigned int SCR_WIDTH = 512;
 const unsigned int SCR_HEIGHT = 512;
@@ -31,6 +32,8 @@ int main()
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
     glfwSetWindowSizeCallback(window, window_size_callback);
+
+    gui_init();
 
     glEnable(GL_DEPTH_TEST);
 
