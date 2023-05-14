@@ -24,6 +24,7 @@ int main()
     glfwInit();
     GLFWwindow* window = glfwCreateWindow(w, h, "Deengine", NULL, NULL);
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetScrollCallback(window, scroll_callback);
@@ -31,8 +32,6 @@ int main()
     glfwSetCursorPosCallback(window, cursor_position_callback);
     glfwSetWindowSizeCallback(window, window_size_callback);
 
-    glfwSwapInterval(1);
-    
     glEnable(GL_DEPTH_TEST);
 
     glFrustum(-1,1, -1,1, 2,200);
