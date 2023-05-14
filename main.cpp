@@ -22,7 +22,7 @@ void draw_world()
 int main()
 {
     glfwInit();
-    GLFWwindow* window = glfwCreateWindow(w, h, "Deengine", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, "Deengine", NULL, NULL);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 

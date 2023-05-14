@@ -27,11 +27,11 @@ class element{
         vert[4] = 30;   vert[5] = 30;
         vert[6] = 30;   vert[7] = 0;
     }
-    element(float w, float h){
-        vert[0] = 0;    vert[1] = 0;
-        vert[2] = 0;    vert[3] = h;
-        vert[4] = w;    vert[5] = h;
-        vert[6] = w;    vert[7] = 0;
+    element(float w, float h, float pos_w, float pos_h){
+        vert[0] = pos_w;        vert[1] = pos_h;
+        vert[2] = pos_w;        vert[3] = h + pos_h;
+        vert[4] = w + pos_w;    vert[5] = h + pos_h;
+        vert[6] = w + pos_w;    vert[7] = pos_h;
     }
 
     ~element(){}
@@ -40,14 +40,14 @@ class element{
     float vert[8];
 };
 
-element test_panel;
+element test_panel(screen_width,30,0,screen_height - 30);
 
 void draw_gui()
 {
     glPushMatrix();
     glLoadIdentity();
-    glOrtho(0,w,h,0, -1,1); //окно теперь совпадает с координатами окна
-    glColor3f(1,1,1);
+    glOrtho(0,screen_width,screen_height,0, -1,1); //координаты теперь совпадают с координатами окна
+    glColor3f(0,0,0);
     test_panel.draw_element();
     glPopMatrix();
 }
