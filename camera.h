@@ -12,6 +12,10 @@ void move_camera()
     if(key_down) rotation_x = --rotation_x < 0 ? 0 : rotation_x;
     if(key_left) rotation_z = ++rotation_z;
     if(key_right) rotation_z = --rotation_z;
+    
+    
+    //if(drag_y != 0) rotation_x = rotation_z + drag_x > 180 ? 180 : rotation_x;
+    if(mouse_left) rotation_z = rotation_z + drag_y;
 
     float angle = -rotation_z / 180 * M_PI;
     float speed = 0;

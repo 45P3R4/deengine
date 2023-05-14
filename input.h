@@ -31,17 +31,16 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
     }
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
         mouse_left = false;
-        drag_x = drag_y = 0;
     }
 }
 
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
     if(mouse_left){
-        drag_x = drag_y = 0;
-        drag_x = xpos - mouse_x;
-        drag_y = ypos - mouse_y;
-    }     
+        drag_x = (xpos - mouse_x);
+        drag_y = (ypos - mouse_y);
+    }
+
     mouse_x = xpos;
     mouse_y = ypos;
 }

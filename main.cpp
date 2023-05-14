@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <math.h>
+#include <iostream>
 
 #include "draw_primitives.h"
 #include "window.h"
@@ -21,7 +22,7 @@ void draw_world()
 int main()
 {
     glfwInit();
-    GLFWwindow* window = glfwCreateWindow(w, h, "OpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(w, h, "Deengine", NULL, NULL);
     glfwMakeContextCurrent(window);
 
     glfwSetKeyCallback(window, key_callback);
@@ -29,6 +30,8 @@ int main()
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
     glfwSetWindowSizeCallback(window, window_size_callback);
+
+    glfwSwapInterval(1);
     
     glEnable(GL_DEPTH_TEST);
 
@@ -46,7 +49,6 @@ int main()
         glPopMatrix();
 
         glFlush();
-
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

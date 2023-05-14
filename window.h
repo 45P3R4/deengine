@@ -1,6 +1,8 @@
 int w = 512;
 int h = 512;
 
+short framerate = 144;
+
 float buffer_color[3] = {0.6,0.8,1};
 
 void window_size_callback(GLFWwindow* window, int width, int height)

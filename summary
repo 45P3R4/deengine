@@ -51,3 +51,8 @@
 ограничение градусов при повороте камеры:
 if(key_left) rotation_x = ++rotation_x > 180 ? 180 : rotation_x;
 if(key_right) rotation_x = --rotation_x < 0 ? 0 : rotation_x;
+
+................................
+идти вперед по повороту камеры
+position_x += sin(angle) * speed;
+position_y += cos(angle) * speed;
