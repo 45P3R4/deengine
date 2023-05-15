@@ -27,12 +27,10 @@ void draw_element(gui_element* element){
 }
 
 gui_element bottom_panel;
-gui_element square;
 
 void gui_init()
 {
     bottom_panel = create_element(screen_width,30,0,screen_height-30);
-    square = create_element(30,30,screen_width - 30, 0);
 }
 
 void draw_gui()
@@ -42,6 +40,5 @@ void draw_gui()
     glOrtho(0,screen_width, screen_height,0, -1,1);
     glColor3f(0,0,0);
     draw_element(&bottom_panel);
-    draw_element(&square);
     glPopMatrix();
 }
