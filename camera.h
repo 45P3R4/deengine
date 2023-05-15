@@ -1,3 +1,5 @@
+#define PI (3.141592653589793)
+
 float rotation_x = 45;
 float rotation_y = 0;
 float rotation_z = 0;
@@ -13,8 +15,8 @@ void move_camera()
 {
     if(key_up) rotation_x = ++rotation_x > 180 ? 180 : rotation_x;
     if(key_down) rotation_x = --rotation_x < 0 ? 0 : rotation_x;
-    if(key_left) rotation_z = ++rotation_z;
-    if(key_right) rotation_z = --rotation_z;
+    if(key_left) rotation_z++;
+    if(key_right) rotation_z--;
      
     if(mouse_right){
         rotation_z = -drag_x * turn_speed + rotation_z;
@@ -25,12 +27,12 @@ void move_camera()
             rotation_x = 0;
     } 
 
-    float angle = -rotation_z / 180 * M_PI;
+    float angle = -rotation_z / 180 * PI;
     float turn_speed = 0;
     if(key_w) turn_speed = move_speed;
     if(key_s) turn_speed = -move_speed;
-    if(key_a) {turn_speed = move_speed; angle -= M_PI*0.5;}
-    if(key_d) {turn_speed = move_speed; angle += M_PI*0.5;}
+    if(key_a) {turn_speed = move_speed; angle -= PI*0.5;}
+    if(key_d) {turn_speed = move_speed; angle += PI*0.5;}
     if(turn_speed != 0){
         position_x += sin(angle) * turn_speed;
         position_y += cos(angle) * turn_speed;
