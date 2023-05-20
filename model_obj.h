@@ -1,27 +1,24 @@
 GLfloat* obj_vert = NULL;
-GLfloat* obj_index = NULL;
+GLuint* obj_face = NULL;
+GLuint* obj_face_v = NULL;
 unsigned int obj_v_count = 0;
+unsigned int obj_f_count = 0;
 
+char path[256] = "models\\star.obj\0";
+//int index[72] = {0};
 
 void open_obj(char* path)
 {
     char cv[100] = {0};
     char cn[100] = {0};
     char ct[100] = {0};
-    char cf[100] = {0};
+    char cf;
     char cs[100] = {0};
     char c;
 
     float v_x;
     float v_y;
     float v_z;
-
-    int index[30] = {0};
-    const char MAX_INDEXES = 10;
-    char index0[MAX_INDEXES];
-    char index1[MAX_INDEXES];
-    char index2[MAX_INDEXES];
-    char index3[MAX_INDEXES];
 
     
     if(fopen(path,"r")){
@@ -50,39 +47,69 @@ void open_obj(char* path)
         {
             if(strcmp(cn, "vt") == 0)
                 break;
-            printf("%s\n", cn);
         }
-        printf("\n");
 
         while(fscanf(obj, "%s", ct) != EOF)
         {
             if(strcmp(ct, "s") == 0)
                 break;
-            printf("%s\n", ct);
         }
-        printf("\n");
 
         fscanf(obj, "%s", cs);
 
-        while(fscanf(obj, "%s %s %s %s %s", cf, index0, index1, index2, index3) != EOF)
+        int digits = 0;
+        cf = getc(obj);
+        cf = getc(obj);
+        cf = getc(obj);
+        obj_face = malloc(sizeof(GLuint));
+        char last_symbol;
+
+        while(cf != EOF)
         {
-            printf("%s %s %s %s %s\n", cf, index0, index1, index2, index3);
-            unsigned int counter = 0;
-            for (int i = 0; i < MAX_INDEXES; i++)
-            {
-                if(isdigit(index0[i])){
-                    index[counter] = (index0[i] - '0');
-                }
-                else if(isdigit(index0[i]) && index[counter] != 0){
-                    index[counter] = 10 * index[counter] + index0[i];
-                }
-                else if(index0[i] = '/')
-                    continue;
-                
-                printf("\n%d\n", index[i]);
+            cf = getc(obj);
+
+            if(cf  == '/' || (cf == ' ')){
+                obj_f_count++;
+                digits = 0;
+                obj_face = realloc(obj_face, (obj_f_count + 1) * sizeof(GLuint));
             }
+
+            if(isdigit(cf) && digits == 0){
+                *(obj_face + obj_f_count ) = cf - '0';
+                digits++;
+            }
+
+            else if((isdigit(cf)) && digits > 0){
+                *(obj_face + obj_f_count) = (*(obj_face + obj_f_count)*10) + (cf - '0');
+                digits++;
+            } 
+
+            last_symbol = cf;
+            
         }
+
+        obj_f_count++;
+        obj_face_v = malloc((sizeof(GLuint) * (obj_f_count/3)));
+
+        int ii = 0;
+
+        for (int i = 0; i < obj_f_count; i+=3)
+        {
+            *(obj_face_v+ii) = *(obj_face+i);
+            ii++;
+            obj_face_v = realloc(obj_face_v, sizeof(GLuint)*(ii+1));
+        }
+
+        for (int i = 0; i < obj_f_count/3; i++)
+        {
+            printf("%d\n", *(obj_face_v+i));
+        }
+        
+
         fclose(obj);
     } 
+    
+    printf("\n%s\n", path);
     printf("vertices: %u\n", obj_v_count/3);
+    printf("faces: %u\n", (obj_f_count)/9);
 }
