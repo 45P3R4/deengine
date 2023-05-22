@@ -1,18 +1,17 @@
 GLfloat* obj_vert = NULL;
-GLuint* obj_face = NULL;
 GLuint* obj_face_v = NULL;
+float* obj_random_colors = NULL;
 unsigned int obj_v_count = 0;
 unsigned int obj_f_count = 0;
 
-char path[256] = "models\\star.obj\0";
-//int index[72] = {0};
+char path[256] = "models\\duck_v.obj\0";
 
 void open_obj(char* path)
 {
     char cv[100] = {0};
     char cn[100] = {0};
     char ct[100] = {0};
-    char cf;
+    char cf[100] = {0};
     char cs[100] = {0};
     char c;
 
@@ -20,12 +19,17 @@ void open_obj(char* path)
     float v_y;
     float v_z;
 
+    int f_x;
+    int f_y;
+    int f_z;
+
     
     if(fopen(path,"r")){
         FILE* obj;
         
         unsigned int i = 0;
         obj_vert = malloc(sizeof(GLfloat));
+        obj_face_v = malloc(sizeof(GLuint));
 
         obj = fopen(path,"r");
         while(fscanf(obj, "%s %g %g %g", cv, &v_x, &v_y, &v_z) != EOF)
@@ -34,82 +38,58 @@ void open_obj(char* path)
                 obj_v_count += 3; 
                 obj_vert = realloc(obj_vert, obj_v_count * sizeof(GLfloat));
                 *(obj_vert+i) = v_x;
-                *(obj_vert+i+1) = v_z;
-                *(obj_vert+i+2) = v_y;
+                *(obj_vert+i+1) = v_y;
+                *(obj_vert+i+2) = v_z;
                 i = i+3;
             }
             else
                 if(i > 0)
                     break; 
+                    
         }
 
-        while(fscanf(obj, "%s", cn) != EOF)
+
+        i=0;
+
+        while(fscanf(obj, "%s %d %d %d", cs, &f_x, &f_y, &f_z) != EOF)
         {
-            if(strcmp(cn, "vt") == 0)
-                break;
+            obj_f_count +=3;
+            obj_face_v = realloc(obj_face_v, obj_f_count * sizeof(GLuint));
+
+            *(obj_face_v+i) = f_x-1;
+            *(obj_face_v+i+1) = f_y-1;
+            *(obj_face_v+i+2) = f_z-1;
+            i += 3;
         }
 
-        while(fscanf(obj, "%s", ct) != EOF)
-        {
-            if(strcmp(ct, "s") == 0)
-                break;
-        }
-
-        fscanf(obj, "%s", cs);
-
-        int digits = 0;
-        cf = getc(obj);
-        cf = getc(obj);
-        cf = getc(obj);
-        obj_face = malloc(sizeof(GLuint));
-        char last_symbol;
-
-        while(cf != EOF)
-        {
-            cf = getc(obj);
-
-            if(cf  == '/' || (cf == ' ')){
-                obj_f_count++;
-                digits = 0;
-                obj_face = realloc(obj_face, (obj_f_count + 1) * sizeof(GLuint));
-            }
-
-            if(isdigit(cf) && digits == 0){
-                *(obj_face + obj_f_count ) = cf - '0';
-                digits++;
-            }
-
-            else if((isdigit(cf)) && digits > 0){
-                *(obj_face + obj_f_count) = (*(obj_face + obj_f_count)*10) + (cf - '0');
-                digits++;
-            } 
-
-            last_symbol = cf;
-            
-        }
-
-        obj_f_count++;
-        obj_face_v = malloc((sizeof(GLuint) * (obj_f_count/3)));
-
-        int ii = 0;
-
-        for (int i = 0; i < obj_f_count; i+=3)
-        {
-            *(obj_face_v+ii) = *(obj_face+i);
-            ii++;
-            obj_face_v = realloc(obj_face_v, sizeof(GLuint)*(ii+1));
-        }
-
-        for (int i = 0; i < obj_f_count/3; i++)
-        {
-            printf("%d\n", *(obj_face_v+i));
-        }
-        
 
         fclose(obj);
     } 
+
+
+    obj_random_colors = malloc(sizeof(float)*obj_f_count);
+
+    for (int i = 0; i < obj_f_count; i++)
+    {
+        *(obj_random_colors+i) = rand() % 2;
+    }
+    
+
+    printf("vertices:\n");
+
+
+    for (int i = 0; i < obj_v_count; i+=3){
+        printf("%5g %5g %5g\n", *(obj_vert+i), *(obj_vert+i+1), *(obj_vert+i+2));
+    }
+    
+    printf("faces:\n");
+
+    for (int i = 0; i < obj_f_count; i+=3){
+        printf("%5d %5d %5d\n", *(obj_face_v+i), *(obj_face_v+i+1), *(obj_face_v+i+2));
+    }
+    
     
     printf("\n%s\n", path);
     printf("vertices: %u\n", obj_v_count/3);
-    printf("faces: %u\n", (obj_f_count)/9);
+    printf("faces: %u\n", (obj_f_count)/3);
 }

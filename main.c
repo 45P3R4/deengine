@@ -55,15 +55,18 @@ int main()
             glColor3f(1,1,0);
 
             glVertexPointer(3, GL_FLOAT, 0, &obj_vert[0]);
+            glColorPointer(3, GL_FLOAT, 0, &obj_random_colors[0]);
             glEnableClientState(GL_VERTEX_ARRAY);
+            glEnableClientState(GL_COLOR_ARRAY);
                 glColor3f(1,1,1);
-                glDrawArrays(GL_POINTS, 0, obj_v_count/3);
+                //glDrawArrays(GL_POINTS, 0, obj_v_count/3);
                 // glColor3f(0.9,0.9,0.9);
                 // glDrawArrays(GL_LINE_LOOP, 0, obj_v_count/3);
                 glColor3f(0.8,0.8,0.8);
                 // glDrawArrays(GL_TRIANGLE_FAN, 0, obj_v_count/3);
-                glDrawElements(GL_LINE_STRIP, obj_f_count/3, GL_UNSIGNED_INT, &obj_face_v[0]);
+                glDrawElements(GL_TRIANGLES, obj_f_count, GL_UNSIGNED_INT, &obj_face_v[0]);
             glDisableClientState(GL_VERTEX_ARRAY);
+            glDisableClientState(GL_COLOR_ARRAY);
 
         glPopMatrix();
 
