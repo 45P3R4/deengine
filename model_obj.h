@@ -4,7 +4,7 @@ float* obj_random_colors = NULL;
 unsigned int obj_v_count = 0;
 unsigned int obj_f_count = 0;
 
-char path[256] = "models\\duck_v.obj\0";
+char path[256] = "models\\car_v.obj\0";
 
 void open_obj(char* path)
 {
